@@ -19,11 +19,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-4 align-self-center">
-                        <div class="text-end upgrade-btn">
-                            <a href="https://www.wrappixel.com/templates/monsteradmin/"
-                                class="btn btn-success d-none d-md-inline-block text-white" target="_blank">Upgrade to
-                                Pro</a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
