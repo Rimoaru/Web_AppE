@@ -1,9 +1,9 @@
 <?php
-Class Surah_model extends CI_Model{
+Class Buku_model extends CI_Model{
 
     public function getAllData(){
         $this->db->select('*');
-        $this->db->from('surah');
+        $this->db->from('buku');
         $result = $this->db->get();
         return $result->result();
     }
@@ -11,13 +11,13 @@ Class Surah_model extends CI_Model{
     public function kodeGenerator(){
         $kode = 1;
         while(true){
-            $this->db->select('surah.id', FALSE);
+            $this->db->select('buku.id', FALSE);
             $this->db->order_by('id','ASC');
             // $nomor = str_pad($kode, 2, "0", STR_PAD_LEFT);
             $id = "ID".$kode;
             $this->db->where('id', $id);
             $this->db->limit(1);
-            $query = $this->db->get('surah');
+            $query = $this->db->get('buku');
             
             if($query->num_rows() <> 0){      
                 //cek kode jika telah tersedia
@@ -30,7 +30,7 @@ Class Surah_model extends CI_Model{
     }
 
     public function inputData($data){
-        if($this->db->insert('surah', $data)){
+        if($this->db->insert('buku', $data)){
             return TRUE;
         }else {
             return FALSE;
@@ -39,7 +39,7 @@ Class Surah_model extends CI_Model{
 
     public function getNameOfFile($kode){
         $this->db->select('*');
-        $this->db->from('surah');
+        $this->db->from('buku');
         $this->db->where('id', $kode);
         $query =$this->db->get();
         return $query->row('file');
@@ -57,7 +57,7 @@ Class Surah_model extends CI_Model{
     public function getDataByID($kode)
     {
         $this->db->select("*");
-        $this->db->from("surah");
+        $this->db->from("buku");
         $where = array("id" => $kode);
         $this->db->where($where);
         $this->db->limit(1);

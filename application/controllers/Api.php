@@ -11,42 +11,38 @@ class Api extends RestController {
         parent::__construct();
     }
 
-    public function surah_get()
+    public function buku_get()
     {
         $kode = $this->get('id');
 
         if ($kode == '' || $kode == NULL) {
-            $surah = $this->db->get('surah')->result();
-            // Replace data file agar menjadi Link
-            foreach ( $surah as $s){
-                $s->file = base_url('assets/files/').$s->file;
-            }
-            if ( $surah ){
+            $buku = $this->db->get('buku')->result();
+            if ( $buku ){
                 // Set the response and exit
-                $this->response( $surah, 200 );
+                $this->response( $buku, 200 );
             }else{
                 // Set the response and exit
                 $this->response( [
                     'status' => false,
-                    'message' => 'Tidak ada Surah yang ditemukan!'
+                    'message' => 'Tidak ada buku yang ditemukan!'
                 ], 404 );
             }
         }else {
-            $surah = $this->db->where('id', $kode)->get('surah')->result();
+            $buku = $this->db->where('id', $kode)->get('buku')->result();
             
-            if ( count($surah) != 0 )
+            if ( count($buku) != 0 )
             {
-                $this->response( $surah, 200 );
+                $this->response( $buku, 200 );
             }
             else
             {
                 $this->response( [
                     'status' => false,
-                    'message' => 'Surah tersebut tidak ada!'
+                    'message' => 'buku tersebut tidak ada!'
                 ], 404 );
             }
         }
-        $this->response($surah, 200);
+        $this->response($buku, 200);
     }
 
 }

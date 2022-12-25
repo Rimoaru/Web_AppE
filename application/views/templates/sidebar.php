@@ -81,15 +81,33 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <!-- User Profile-->
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="<?=base_url()?>admin/dashboard" aria-expanded="false"><i class="me-3 far fa-clock fa-fw"
                                     aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="<?=base_url()?>admin/upload_data" aria-expanded="false">
-                                <i class="me-3 fas fa-upload" aria-hidden="true"></i><span
-                                    class="hide-menu">Upload Data</span></a>
-                        </li>
+                                href="<?=base_url()?>admin/profile" aria-expanded="false">
+                                <i class="me-3 fas fa-user" aria-hidden="true"></i><span
+                                    class="hide-menu">Profil</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="<?=base_url()?>admin/kelas" aria-expanded="false">
+                                <i class="me-3 fas fa-building" aria-hidden="true"></i><span
+                                    class="hide-menu">Kelas</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark"
+                                data-toggle="collapse" href="#bukuSidebar" aria-expanded="false">
+                                <i class="me-3 fas fa-book" aria-hidden="true"></i><span
+                                    class="hide-menu">Buku</span></a>
+                                    <ul id="bukuSidebar" class="collapse first-level">
+                                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                            href="<?=base_url()?>admin/kategori" aria-expanded="false">
+                                            <i class="me-3" aria-hidden="true"></i><span
+                                            class="hide-menu">Kategori Buku</span></a></li>
+                                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                            href="<?=base_url()?>admin/upload_buku" aria-expanded="false">
+                                            <i class="me-3" aria-hidden="true"></i><span
+                                            class="hide-menu">Upload Buku</span></a></li>
+                                    </ul>
+                                </li>
+                        
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="<?=base_url()?>auth/logout" aria-expanded="false">
                                 <i class="me-3 fas fa-sign-out-alt" aria-hidden="true"></i><span

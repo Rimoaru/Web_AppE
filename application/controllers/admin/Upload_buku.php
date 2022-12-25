@@ -1,5 +1,5 @@
 <?php
-class Upload_data extends CI_Controller {
+class Upload_buku extends CI_Controller {
     
 	function __construct() {
         parent::__construct();
@@ -12,11 +12,11 @@ class Upload_data extends CI_Controller {
 
 	public function index()
 	{
-        $data['surah'] = $this->surah_model->getAllData();
+        $data['buku'] = $this->buku_model->getAllData();
 		
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar');
-		$this->load->view('upload_data', $data);
+		$this->load->view('upload_buku', $data);
 		$this->load->view('templates/footer');
 	}
 
@@ -30,7 +30,7 @@ class Upload_data extends CI_Controller {
 		date_default_timezone_set("Asia/Jakarta");
         $config['upload_path']          = "./assets/files/";
 		$config['allowed_types']        = 'pdf|PDF';
-		$config['file_name']            = $this->surah_model->kodeGenerator()."_".date("d-m-y_H-i-s");
+		$config['file_name']            = $this->buku_model->kodeGenerator()."_".date("d-m-y_H-i-s");
 
         $this->load->library('upload', $config);
 
@@ -40,58 +40,59 @@ class Upload_data extends CI_Controller {
             $msg = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
             '.$error.'</div>';
 			$this->session->set_flashdata('upload', $msg);
-			redirect('admin/upload_data');
+			redirect('admin/upload_buku');
 		}else{
 			$file = $this->upload->data();
 			$nama_file = $file['file_name'];
 		}
 
         $data = array(
-			'id' => $this->surah_model->kodeGenerator(),
-			'nama_surah' => $this->input->post('nama_surah', TRUE),
-			'jml_ayat' => $this->input->post('jml_ayat', TRUE),
+			'id' => $this->buku_model->kodeGenerator(),
+			'judul_buku' => $this->input->post('judul_buku', TRUE),
+			'kategori' => $this->input->post('kategori', TRUE),
+			'kelas' => $this->input->post('kelas', TRUE),
 			'file' => $nama_file,
 		);
 
-        $cek = $this->surah_model->inputData($data);
+        $cek = $this->buku_model->inputData($data);
 		if($cek){
             $pesan = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Data Berhasil disimpan</div>';
+            Buku Berhasil disimpan</div>';
 			$this->session->set_flashdata('simpan',$pesan);
 		}else{
             $pesan = '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            Data Gagal disimpan!</div>';
+            Buku Gagal disimpan!</div>';
 			$this->session->set_flashdata('simpan',$pesan);
 		}
-		redirect('admin/upload_data');
+		redirect('admin/upload_buku');
     }
 
 
 	public function delete($kode){
 		$where = array('id' => $kode);
-		$file = $this->surah_model->getNameOfFile($kode);
+		$file = $this->buku_model->getNameOfFile($kode);
 		$path = "./assets/files/".$file;
 		
-		$cek = $this->surah_model->deleteData($where,'surah');
+		$cek = $this->buku_model->deleteData($where,'buku');
 		if($cek){
 			$pesan = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Data Berhasil dihapus</div>';
+            Buku Berhasil dihapus</div>';
 			$this->session->set_flashdata('hapus', $pesan);
 			unlink($path);
 		}else{
 			$pesan = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Data Gagal dihapus</div>';
+            Buku Gagal dihapus</div>';
 			$this->session->set_flashdata('hapus', $pesan);
 		}
 
-        redirect('admin/upload_data');
+        redirect('admin/upload_buku');
 	}
 
 
 	public function getDataEdit(){
         $kode = $this->input->post('kode');
         
-        $getData = $this->surah_model->getDataByID($kode);
+        $getData = $this->buku_model->getDataByID($kode);
 
         echo json_encode($getData);
     }
@@ -101,50 +102,52 @@ class Upload_data extends CI_Controller {
 		date_default_timezone_set("Asia/Jakarta");
         $config['upload_path']          = "./assets/files/";
 		$config['allowed_types']        = 'pdf|PDF';
-		$config['file_name']            = $this->input->post('kode_surah', TRUE)."_".date("d-m-y_H-i-s");
+		$config['file_name']            = $this->input->post('kode_buku', TRUE)."_".date("d-m-y_H-i-s");
 
         $this->load->library('upload', $config);
 
-		$nama_file_DB = $this->surah_model->getNameOfFile($this->input->post('kode_surah', TRUE));
+		$nama_file_DB = $this->buku_model->getNameOfFile($this->input->post('kode_buku', TRUE));
 
         
         if(!$this->upload->do_upload('file')){
 			if ($this->upload->display_errors() != "<p>You did not select a file to upload.</p>"){
 				$error = $this->upload->display_errors();
 				$this->session->set_flashdata('upload', $error);
-				redirect('admin/upload_data');
+				redirect('admin/upload_buku');
 			}else{
 				$data = array(
-                    'id' => $this->input->post('kode_surah', TRUE),
-                    'nama_surah' => $this->input->post('nama_surah', TRUE),
-                    'jml_ayat' => $this->input->post('jml_ayat', TRUE),
+                    'id' => $this->input->post('kode_buku', TRUE),
+                    'judul_buku' => $this->input->post('judul_buku', TRUE),
+                    'kategori' => $this->input->post('kategori', TRUE),
+					'kelas' => $this->input->post('kelas', TRUE),
 				);
 			}
 		}else{
 			$path = './assets/files/';
 			unlink($path.$nama_file_DB);
 			$data = array (
-                'id' => $this->input->post('kode_surah', TRUE),
-            	'nama_surah' => $this->input->post('nama_surah', TRUE),
-                'jml_ayat' => $this->input->post('jml_ayat', TRUE),
-				'file' => $this->input->post('kode_surah', TRUE)."_".date("d-m-y_H-i-s"),
+                'id' => $this->input->post('kode_buku', TRUE),
+            	'judul_buku' => $this->input->post('judul_buku', TRUE),
+                'kategori' => $this->input->post('kategori', TRUE),
+				'kelas' => $this->input->post('kelas', TRUE),
+				'file' => $this->input->post('kode_buku', TRUE)."_".date("d-m-y_H-i-s"),
 			);
 		}
 		
-		$kode = $this->input->post('kode_surah');
+		$kode = $this->input->post('kode_buku');
         $where = array('id' => $kode);
 
-		$cek = $this->surah_model->editData($where, $data,'surah');
+		$cek = $this->buku_model->editData($where, $data,'buku');
 		if($cek){
 			$pesan = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Data Berhasil diubah</div>';
+            Buku Berhasil diubah</div>';
 			$this->session->set_flashdata('edit', $pesan);
 		}else{
 			$pesan = '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Data Gagal diubah</div>';
+            Buku Gagal diubah</div>';
 			$this->session->set_flashdata('edit', $pesan);
 		}
 
-        redirect('admin/upload_data');
+        redirect('admin/upload_buku');
     }
 }

@@ -8,19 +8,19 @@
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="page-title mb-0 p-0">Upload Surah</h3>
+                        <h3 class="page-title mb-0 p-0">Upload Buku</h3>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="<?=base_url()?>">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Upload Data</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Upload Buku</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                     <div class="col-md-6 col-4 align-self-center">
                         <div class="text-end upgrade-btn">
-                            <button class="btn btn-success d-none d-md-inline-block text-white" data-toggle="modal" data-target="#tambahDataModal"><span class="fas fa-plus-circle"></span> Tambah data</button>
+                            <button class="btn btn-success d-none d-md-inline-block text-white" data-toggle="modal" data-target="#tambahDataModal"><span class="fas fa-plus-circle"></span> Tambah Buku</button>
                         </div>
                     </div>
                 </div>
@@ -41,32 +41,34 @@
                 <!-- ============================================================== -->
                 <div class="card">
             <div class="border-bottom">
-              <h3 class="card-header mb-0">Daftar Surah</h3>
+              <h3 class="card-header mb-0">Daftar Buku</h3>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Nama Surah</th>
-                            <th>Jumlah Ayat</th>
-                            <th>File</th>
                             <th>time</th>
+                            <th>Judul Buku</th>
+                            <th>Kategori</th>
+                            <th>Kelas</th>
+                            <th>File</th>
                             <th>Tools</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
-                        foreach($surah as $s) :
+                        foreach($buku as $s) :
                     ?>
                         <tr>
-                            <td><?=$s->nama_surah?></td>
-                            <td style="width: 120px;"><center><?=$s->jml_ayat?></center></td>
-                            <td><a href="<?=base_url('assets/files/'.$s->file)?>" target="_blank" rel="noopener noreferrer">Lihat File</a></td>
                             <td><?=$s->time?></td>
+                            <td><?=$s->judul_buku?></td>
+                            <td style="width: 120px;"><center><?=$s->kategori?></center></td>
+                            <td style="width: 120px;"><center><?=$s->kelas?></center></td>
+                            <td><a href="<?=base_url('assets/files/'.$s->file)?>" target="_blank" rel="noopener noreferrer">Lihat File</a></td>
                             <td style="width: 90px;"><center>
-                                <button style="font-size: 14px; padding: 8px;" class="btn btn-warning edit" data-main="<?=$s->id?>"><i class="fas fa-edit"></i></button>&nbsp;
-                                <button style="font-size: 14px; padding: 8px;" class="btn btn-danger hapus" data-main="<?=$s->id?>"><i  class="fas fa-trash-alt"></i></button>
+                                <button style="font-size: 14px; padding: 8px;" class="btn btn-warning editBuku" data-main="<?=$s->id?>"><i class="fas fa-edit"></i></button>&nbsp;
+                                <button style="font-size: 14px; padding: 8px;" class="btn btn-danger hapusBuku" data-main="<?=$s->id?>"><i  class="fas fa-trash-alt"></i></button>
                             </center></td>
                         </tr>
                     <?php endforeach ?>
@@ -74,10 +76,11 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th>Nama Surah</th>
-                            <th>Jumlah Ayat</th>
-                            <th>File</th>
                             <th>time</th>
+                            <th>Judul Buku</th>
+                            <th>Kategori</th>
+                            <th>Kelas</th>
+                            <th>File</th>
                             <th>Tools</th>
                         </tr>
                     </tfoot>
@@ -101,14 +104,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open_multipart('admin/upload_data/input'); ?>
+                        <?php echo form_open_multipart('admin/upload_buku/input'); ?>
                             <div class="form-group">
-                                <label for="namaSurahInput">Nama Surah</label>
-                                <input type="text" class="form-control" id="namaSurahInput" name="nama_surah" placeholder="Nama Surah..." required>
+                                <label for="namaBukuInput">Judul Buku</label>
+                                <input type="text" class="form-control" id="judulBukuInput" name="judul_buku" placeholder="Judul Buku..." required>
                             </div>
                             <div class="form-group">
-                                <label for="jmlAyatInput">Jumlah Ayat</label>
-                                <input type="number" class="form-control" id="jmlAyatInput" name="jml_ayat" placeholder="Jumlah Ayat..." required>
+                                <label for="kategoriInput">Kategori</label>
+                                <input type="text" class="form-control" id="kategoriInput" name="kategori" placeholder="Kategori Buku..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="kelasInput">Kelas</label>
+                                <input type="text" class="form-control" id="kelasInput" name="kelas" placeholder="Kelas..." required>
                             </div>
                             <div class="form-group">
                                 <label for="fileInput">Upload File</label>
@@ -138,15 +145,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open_multipart('admin/upload_data/edit'); ?>
+                        <?php echo form_open_multipart('admin/upload_buku/edit'); ?>
                             <div class="form-group">
-                            <input type="hidden" readonly class="form-control" id="kodeSurahEdit" name="kode_surah" required>
-                                <label for="namaSurahEdit">Nama Surah</label>
-                                <input type="text" class="form-control" id="namaSurahEdit" name="nama_surah" placeholder="Nama Surah..." required>
+                            <input type="hidden" readonly class="form-control" id="kodeBukuEdit" name="kode_buku" required>
+                                <label for="judulBukuEdit">Judul Buku</label>
+                                <input type="text" class="form-control" id="judulBukuEdit" name="judul_buku" placeholder="Judul Buku..." required>
                             </div>
                             <div class="form-group">
-                                <label for="jmlAyatEdit">Jumlah Ayat</label>
-                                <input type="number" class="form-control" id="jmlAyatEdit" name="jml_ayat" placeholder="Jumlah Ayat..." required>
+                                <label for="kategoriEdit">Kategori Buku</label>
+                                <input type="text" class="form-control" id="kategoriEdit" name="kategori" placeholder="Kategori Buku..." required>
+                            </div>
+                            <div class="form-group">
+                                <label for="kelasEdit">Kelas</label>
+                                <input type="text" class="form-control" id="kelasEdit" name="kelas" placeholder="Kelas..." required>
                             </div>
                             <div class="form-group">
                                 <label for="fileEdit">Upload File</label>

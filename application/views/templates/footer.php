@@ -43,11 +43,12 @@
         $(document).ready(function () {
             //menjalankan dataTable dan menhilangkan colomn time kemudian di sort desc berdasarkan time
             $('#dataTable').DataTable({
-                order: [[3, 'desc']]
-            }).column(3).visible(false);
+                order: [[0, 'desc']]
+            }).column(0).visible(false);
         });
 
-        $(document).on('click', '.hapus', function (event){
+        // Setting Tombol hapus di Table
+        $(document).on('click', '.hapusBuku', function (event){
             var kode = $(this).data('main');
             $('#confirmModal').modal('show');
 
@@ -55,11 +56,12 @@
                 $('#confirmModal').modal('hide');
             });
             $('#deleteConfirm').on('click', function(){
-                window.location.replace("<?php echo base_url('admin/upload_data/delete/"+kode+"')?>");
+                window.location.replace("<?php echo base_url('admin/upload_buku/delete/"+kode+"')?>");
             });
         });
 
-        $(document).on('click', '.edit', function (event){
+        // Setting Tombol edit di Table
+        $(document).on('click', '.editBuku', function (event){
             var kode = $(this).data('main');
             $('#editDataModal').modal('show');
 
@@ -70,13 +72,14 @@
             $.ajax({
                 type : "POST",
                 dataType:"JSON",
-                url: "<?php echo base_url();?>admin/upload_data/getDataEdit",
+                url: "<?php echo base_url();?>admin/upload_buku/getDataEdit",
                 data : {kode : kode},
                 success : function(data){
                      console.log(data);
-                    $('#kodeSurahEdit').val(data.id);
-                    $('#namaSurahEdit').val(data.nama_surah);
-                    $('#jmlAyatEdit').val(data.jml_ayat);
+                    $('#kodeBukuEdit').val(data.id);
+                    $('#judulBukuEdit').val(data.judul_buku);
+                    $('#kategoriEdit').val(data.kategori);
+                    $('#kelasEdit').val(data.kelas);
                 }
                 
             });
