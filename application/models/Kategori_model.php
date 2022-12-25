@@ -1,11 +1,9 @@
 <?php
-Class Buku_model extends CI_Model{
+Class Kategori_model extends CI_Model{
 
     public function getAllData(){
-        $result = $this->db->select('*, kelas.kelas as nama_kelas, kategori.kategori as nama_kategori, buku.id as idBuku')
-            ->from('buku')
-            ->join('kelas', 'buku.kelas = kelas.id', 'LEFT')
-            ->join('kategori', 'buku.kategori = kategori.id', 'LEFT')
+        $result = $this->db->select('*')
+            ->from('kategori')
             ->get();
         return $result->result();
     }
@@ -13,13 +11,13 @@ Class Buku_model extends CI_Model{
     public function kodeGenerator(){
         $kode = 1;
         while(true){
-            $this->db->select('buku.id', FALSE);
-            $this->db->order_by('id','ASC');
+            $this->db->select('kategori.id', FALSE)
+                ->order_by('id','ASC');
             // $nomor = str_pad($kode, 2, "0", STR_PAD_LEFT);
-            $id = "ID".$kode;
-            $this->db->where('id', $id);
-            $this->db->limit(1);
-            $query = $this->db->get('buku');
+            $id = "KG".$kode;
+            $query = $this->db->where('id', $id)
+                ->limit(1)
+                ->get('kategori');
             
             if($query->num_rows() <> 0){      
                 //cek kode jika telah tersedia
@@ -32,19 +30,11 @@ Class Buku_model extends CI_Model{
     }
 
     public function inputData($data){
-        if($this->db->insert('buku', $data)){
+        if($this->db->insert('kategori', $data)){
             return TRUE;
         }else {
             return FALSE;
         }
-    }
-
-    public function getNameOfFile($kode){
-        $this->db->select('*');
-        $this->db->from('buku');
-        $this->db->where('id', $kode);
-        $query =$this->db->get();
-        return $query->row('file');
     }
 
     public function deleteData($where, $table){   
@@ -58,13 +48,12 @@ Class Buku_model extends CI_Model{
 
     public function getDataByID($kode)
     {
-        $this->db->select("*");
-        $this->db->from("buku");
         $where = array("id" => $kode);
-        $this->db->where($where);
-        $this->db->limit(1);
-        $query = $this->db->get();
-
+        $query = $this->db->select("*")
+            ->from("kategori")
+            ->where($where)
+            ->limit(1)
+            ->get();
         return $query->row();
     }
 

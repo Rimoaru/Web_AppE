@@ -59,6 +59,28 @@
                 window.location.replace("<?php echo base_url('admin/upload_buku/delete/"+kode+"')?>");
             });
         });
+        $(document).on('click', '.hapusKelas', function (event){
+            var kode = $(this).data('main');
+            $('#confirmModal').modal('show');
+
+            $('.deleteBatal').on('click', function(){
+                $('#confirmModal').modal('hide');
+            });
+            $('#deleteConfirm').on('click', function(){
+                window.location.replace("<?php echo base_url('admin/kelas/delete/"+kode+"')?>");
+            });
+        });
+        $(document).on('click', '.hapusKategori', function (event){
+            var kode = $(this).data('main');
+            $('#confirmModal').modal('show');
+
+            $('.deleteBatal').on('click', function(){
+                $('#confirmModal').modal('hide');
+            });
+            $('#deleteConfirm').on('click', function(){
+                window.location.replace("<?php echo base_url('admin/kategori/delete/"+kode+"')?>");
+            });
+        });
 
         // Setting Tombol edit di Table
         $(document).on('click', '.editBuku', function (event){
@@ -80,6 +102,48 @@
                     $('#judulBukuEdit').val(data.judul_buku);
                     $('#kategoriEdit').val(data.kategori);
                     $('#kelasEdit').val(data.kelas);
+                }
+                
+            });
+        });
+        $(document).on('click', '.editKelas', function (event){
+            var kode = $(this).data('main');
+            $('#editDataModal').modal('show');
+
+            $('.editBatal').on('click', function(){
+                $('#editDataModal').modal('hide');
+            });
+            
+            $.ajax({
+                type : "POST",
+                dataType:"JSON",
+                url: "<?php echo base_url();?>admin/kelas/getDataEdit",
+                data : {kode : kode},
+                success : function(data){
+                     console.log(data);
+                    $('#kodeKelasEdit').val(data.id);
+                    $('#namaKelasEdit').val(data.kelas);
+                }
+                
+            });
+        });
+        $(document).on('click', '.editKategori', function (event){
+            var kode = $(this).data('main');
+            $('#editDataModal').modal('show');
+
+            $('.editBatal').on('click', function(){
+                $('#editDataModal').modal('hide');
+            });
+            
+            $.ajax({
+                type : "POST",
+                dataType:"JSON",
+                url: "<?php echo base_url();?>admin/kategori/getDataEdit",
+                data : {kode : kode},
+                success : function(data){
+                     console.log(data);
+                    $('#kodeKategoriEdit').val(data.id);
+                    $('#namaKategoriEdit').val(data.kategori);
                 }
                 
             });

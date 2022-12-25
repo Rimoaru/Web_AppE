@@ -8,19 +8,19 @@
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="page-title mb-0 p-0">Upload Buku</h3>
+                        <h3 class="page-title mb-0 p-0">Kategori</h3>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="<?=base_url()?>">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Upload Buku</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Kategori</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                     <div class="col-md-6 col-4 align-self-center">
                         <div class="text-end upgrade-btn">
-                            <button class="btn btn-success d-none d-md-inline-block text-white" data-toggle="modal" data-target="#tambahDataModal"><span class="fas fa-plus-circle"></span> Tambah Buku</button>
+                            <button class="btn btn-success d-none d-md-inline-block text-white" data-toggle="modal" data-target="#tambahDataModal"><span class="fas fa-plus-circle"></span> Tambah Kategori</button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <!-- ============================================================== -->
                 <div class="card">
             <div class="border-bottom">
-              <h3 class="card-header mb-0">Daftar Buku</h3>
+              <h3 class="card-header mb-0">Daftar Kategori</h3>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -49,26 +49,20 @@
                     <thead>
                         <tr>
                             <th>time</th>
-                            <th>Judul Buku</th>
-                            <th>Kategori</th>
-                            <th>Kelas</th>
-                            <th>File</th>
+                            <th>Nama Kategori</th>
                             <th>Tools</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php
-                        foreach($buku as $s) :
+                        foreach($kategori as $k) :
                     ?>
                         <tr>
-                            <td><?=$s->time?></td>
-                            <td><?=$s->judul_buku?></td>
-                            <td style="width: 120px;"><center><?=$s->nama_kategori?></center></td>
-                            <td style="width: 120px;"><center><?=$s->nama_kelas?></center></td>
-                            <td><a href="<?=base_url('assets/files/'.$s->file)?>" target="_blank" rel="noopener noreferrer">Lihat File</a></td>
+                            <td><?=$k->time?></td>
+                            <td><center><?=$k->kategori?></center></td>
                             <td style="width: 90px;"><center>
-                                <button style="font-size: 14px; padding: 8px;" class="btn btn-warning editBuku" data-main="<?=$s->idBuku?>"><i class="fas fa-edit"></i></button>&nbsp;
-                                <button style="font-size: 14px; padding: 8px;" class="btn btn-danger hapusBuku" data-main="<?=$s->idBuku?>"><i  class="fas fa-trash-alt"></i></button>
+                                <button style="font-size: 14px; padding: 8px;" class="btn btn-warning editKategori" data-main="<?=$k->id?>"><i class="fas fa-edit"></i></button>&nbsp;
+                                <button style="font-size: 14px; padding: 8px;" class="btn btn-danger hapusKategori" data-main="<?=$k->id?>"><i  class="fas fa-trash-alt"></i></button>
                             </center></td>
                         </tr>
                     <?php endforeach ?>
@@ -77,10 +71,7 @@
                     <tfoot>
                         <tr>
                             <th>time</th>
-                            <th>Judul Buku</th>
-                            <th>Kategori</th>
-                            <th>Kelas</th>
-                            <th>File</th>
+                            <th>Nama Kategori</th>
                             <th>Tools</th>
                         </tr>
                     </tfoot>
@@ -104,32 +95,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open_multipart('admin/upload_buku/input'); ?>
+                        <?php echo form_open_multipart('admin/kategori/input'); ?>
                             <div class="form-group">
-                                <label for="namaBukuInput">Judul Buku</label>
-                                <input type="text" class="form-control" id="judulBukuInput" name="judul_buku" placeholder="Judul Buku..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="kategoriInput">Kategori</label>
-                                <select class="form-control" name="kategori" id="kategoriInput" required>
-                                    <option value=""> -- Pilih Kategori --</option>
-                                    <?php foreach($kategori as $k):?>
-                                        <option value="<?php echo $k->id;?>"><?php echo $k->kategori;?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="kelasInput">Kelas</label>
-                                <select class="form-control" name="kelas" id="kelasInput" required>
-                                    <option value=""> -- Pilih Kelas --</option>
-                                    <?php foreach($kelas as $k):?>
-                                        <option value="<?php echo $k->id;?>"><?php echo $k->kelas;?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="fileInput">Upload File</label>
-                                <input type="file" class="form-control" id="fileInput" name="file" accept="application/pdf" required>
+                                <label for="namaKategoriInput">Nama Kategori</label>
+                                <input type="text" class="form-control" id="namaKategoriInput" name="kategori" placeholder="Nama Kategori..." required>
                             </div>
                             <br>
                             <div class="modal-footer">
@@ -155,34 +124,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <?php echo form_open_multipart('admin/upload_buku/edit'); ?>
+                        <?php echo form_open_multipart('admin/kategori/edit'); ?>
                             <div class="form-group">
-                            <input type="hidden" readonly class="form-control" id="kodeBukuEdit" name="kode_buku" required>
-                                <label for="judulBukuEdit">Judul Buku</label>
-                                <input type="text" class="form-control" id="judulBukuEdit" name="judul_buku" placeholder="Judul Buku..." required>
-                            </div>
-                            <div class="form-group">
-                                <label for="kategoriEdit">Kategori</label>
-                                <select class="form-control" name="kategori" id="kategoriEdit" required>
-                                    <option value=""> -- Pilih Kategori --</option>
-                                    <?php foreach($kategori as $k):?>
-                                        <option value="<?php echo $k->id;?>"><?php echo $k->kategori;?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="kelasEdit">Kelas</label>
-                                <select class="form-control" name="kelas" id="kelasEdit" required>
-                                    <option value=""> -- Pilih Kelas --</option>
-                                    <?php foreach($kelas as $k):?>
-                                        <option value="<?php echo $k->id;?>"><?php echo $k->kelas;?></option>
-                                    <?php endforeach;?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <a id="linkEditBuku" href="#" target="_blank" rel="noopener noreferrer">Lihat File</a>
-                                <label for="fileEdit">Upload File</label>
-                                <input type="file" class="form-control" id="fileEdit" name="file" accept="application/pdf">
+                            <input type="hidden" readonly class="form-control" id="kodeKategoriEdit" name="kode_kategori" required>
+                                <label for="namaKategoriEdit">Nama Kategori</label>
+                                <input type="text" class="form-control" id="namaKategoriEdit" name="kategori" placeholder="Nama Kategori..." required>
                             </div>
                             <br>
                             <div class="modal-footer">

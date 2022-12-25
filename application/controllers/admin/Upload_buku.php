@@ -13,6 +13,8 @@ class Upload_buku extends CI_Controller {
 	public function index()
 	{
         $data['buku'] = $this->buku_model->getAllData();
+		$data['kelas'] = $this->kelas_model->getAllData();
+		$data['kategori'] = $this->kategori_model->getAllData();
 		
 		$this->load->view('templates/header');
 		$this->load->view('templates/sidebar');
@@ -29,8 +31,9 @@ class Upload_buku extends CI_Controller {
 
 		date_default_timezone_set("Asia/Jakarta");
         $config['upload_path']          = "./assets/files/";
-		$config['allowed_types']        = 'pdf|PDF';
+		$config['allowed_types']        = 'pdf|PDF|DOC|doc|DOCX|docx';
 		$config['file_name']            = $this->buku_model->kodeGenerator()."_".date("d-m-y_H-i-s");
+		$config['max_size'] 			= '99999';
 
         $this->load->library('upload', $config);
 
@@ -101,8 +104,10 @@ class Upload_buku extends CI_Controller {
 	public function edit(){
 		date_default_timezone_set("Asia/Jakarta");
         $config['upload_path']          = "./assets/files/";
-		$config['allowed_types']        = 'pdf|PDF';
+		$config['allowed_types']        = 'pdf|PDF|DOC|doc|DOCX|docx';
 		$config['file_name']            = $this->input->post('kode_buku', TRUE)."_".date("d-m-y_H-i-s");
+		$config['max_size'] 			= '99999';
+		
 
         $this->load->library('upload', $config);
 

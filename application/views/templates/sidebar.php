@@ -87,7 +87,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="<?=base_url()?>admin/profile" aria-expanded="false">
                                 <i class="me-3 fas fa-user" aria-hidden="true"></i><span
-                                    class="hide-menu">Profil</span></a></li>
+                                    class="hide-menu">Profile</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="<?=base_url()?>admin/kelas" aria-expanded="false">
                                 <i class="me-3 fas fa-building" aria-hidden="true"></i><span
