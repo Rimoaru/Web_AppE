@@ -16,7 +16,7 @@ class Api extends RestController {
         $kode = $this->get('id');
 
         if ($kode == '' || $kode == NULL) {
-            $buku = $this->db->get('buku')->result();
+            $buku = $this->buku_model->apiAllData();
             if ( $buku ){
                 // Set the response and exit
                 $this->response( $buku, 200 );
@@ -28,7 +28,7 @@ class Api extends RestController {
                 ], 404 );
             }
         }else {
-            $buku = $this->db->where('id', $kode)->get('buku')->result();
+            $buku = $this->buku_model->apiSingleData($kode);
             
             if ( count($buku) != 0 )
             {
