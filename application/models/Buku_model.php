@@ -79,7 +79,7 @@ Class Buku_model extends CI_Model{
     }
 
     public function apiAllData(){
-        $result = $this->db->select('buku.id as id, buku.judul_buku as judul_buku, kategori.kategori as nama_kategori, kelas.kelas as kelas, buku.file as file, buku.time as time')
+        $result = $this->db->select('buku.id as id, buku.judul_buku as judul_buku, kategori.kategori as kategori, kelas.kelas as kelas, buku.file as file, buku.time as time')
             ->from('buku')
             ->join('kelas', 'buku.kelas = kelas.id', 'LEFT')
             ->join('kategori', 'buku.kategori = kategori.id', 'LEFT')
@@ -88,7 +88,7 @@ Class Buku_model extends CI_Model{
     }
 
     public function apiSingleData($kode){
-        $result = $this->db->select('buku.id as id, buku.judul_buku as judul_buku, kategori.kategori as nama_kategori, kelas.kelas as kelas, buku.file as file, buku.time as time')
+        $result = $this->db->select('buku.id as id, buku.judul_buku as judul_buku, kategori.kategori as kategori, kelas.kelas as kelas, buku.file as file, buku.time as time')
             ->from('buku')
             ->join('kelas', 'buku.kelas = kelas.id', 'LEFT')
             ->join('kategori', 'buku.kategori = kategori.id', 'LEFT')
